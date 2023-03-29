@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import com.example.demo.interceptor.CdiCommandInvoker;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.flowable.bpmn.model.CallActivity;
@@ -100,6 +101,7 @@ public class EngineConfiguration implements ProcessEngineLifecycleListener {
                 .setDatabaseSchemaUpdate(AbstractEngineConfiguration.DB_SCHEMA_UPDATE_TRUE)
 //                .setHttpClientConfig(getHttpClientConfig())
                 .setHistoryLevel(HistoryLevel.ACTIVITY)
+                .setCommandInvoker(new CdiCommandInvoker(springProcessEngineConfiguration.getAgendaOperationRunner()))
                 ;
             
             List<FlowableEventListener> flowableEventListeners = Collections.singletonList(new CustomFlowableActivityEventListener());

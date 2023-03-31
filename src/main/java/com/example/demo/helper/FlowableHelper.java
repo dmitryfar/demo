@@ -43,11 +43,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-
-
-/**
- * @author Dmitry Farafonov dmfa0120
- */
 @Component
 public class FlowableHelper {
 	private static final Logger LOGGER = LoggerFactory.getLogger(FlowableHelper.class);
@@ -348,8 +343,6 @@ public class FlowableHelper {
             if (executionEntity == null) {
                 return "Execution " + executionId + " not found";
             }
-            // ExecutionTreeStringBuilder executionTreeStringBuilder = new
-            // ExecutionTreeStringBuilder(executionEntity);
             ExecutionTree executionTree = ExecutionTreeUtil
                             .buildExecutionTree(executionEntity);
             return executionTree.toString();

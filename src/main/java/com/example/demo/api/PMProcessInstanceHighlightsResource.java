@@ -1,8 +1,6 @@
 package com.example.demo.api;
 
 import java.io.InputStream;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +16,6 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.flowable.bpmn.model.BpmnModel;
 import org.flowable.bpmn.model.ExtensionAttribute;
-import org.flowable.cmmn.engine.impl.process.ProcessInstanceService;
 import org.flowable.common.engine.api.FlowableIllegalArgumentException;
 import org.flowable.common.engine.api.FlowableObjectNotFoundException;
 import org.flowable.engine.HistoryService;
@@ -132,11 +129,11 @@ public class PMProcessInstanceHighlightsResource extends BaseProcessInstanceReso
 			List<String> highLightedActivities = new ArrayList<>(processState.getCurrentActivities());
 			List<String> highLightedFlows = processState.getCompletedSequenceFlows();
 
-			String definitionsAttributeValue = bpmnModel.getDefinitionsAttributeValue("meridian",
+			String definitionsAttributeValue = bpmnModel.getDefinitionsAttributeValue("demo",
 					"processDefinitionId");
 			if (StringUtils.isEmpty(definitionsAttributeValue)) {
 				ExtensionAttribute attribute = new ExtensionAttribute("processDefinitionId");
-				attribute.setNamespace("meridian");
+				attribute.setNamespace("demo");
 				attribute.setValue(pde.getId());
 				bpmnModel.addDefinitionsAttribute(attribute);
 			}

@@ -1,9 +1,7 @@
 package com.example.demo.config;
 
 import java.sql.Driver;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -37,7 +35,6 @@ import lombok.extern.slf4j.Slf4j;
 
 @Configuration
 @Slf4j
-//@EnableJpaRepositories(basePackages = "com.example.database")
 public class EngineConfiguration implements ProcessEngineLifecycleListener {
 
     @Value("${spring.datasource.driver-class-name}")
@@ -51,7 +48,7 @@ public class EngineConfiguration implements ProcessEngineLifecycleListener {
 
     @Autowired
     protected ObjectMapper objectMapper;
-    
+
     @Bean
     public DataSource dataSource() {
         SimpleDriverDataSource dataSource = new SimpleDriverDataSource();
@@ -80,26 +77,24 @@ public class EngineConfiguration implements ProcessEngineLifecycleListener {
     public CustomAsyncRunnableExecutionExceptionHandler customAsyncRunnableExecutionExceptionHandler() {
         return new CustomAsyncRunnableExecutionExceptionHandler();
     }
-    
+
     @Bean
     public RestResponseFactory restResponseFactory() {
         return new RestResponseFactory(objectMapper);
     }
     
     @Bean
-    public EngineConfigurationConfigurer<SpringProcessEngineConfiguration> processEngineConfiguration() {
+    public EngineConfigurationConfigurer<SpringProcessEngineConfiguration> processEngineConfiguration(DataSource dataSource) {
         return springProcessEngineConfiguration -> {
             springProcessEngineConfiguration
+                // -- ProcessEngineConfigurationImpl --
                 .setCustomAsyncRunnableExecutionExceptionHandlers(Collections.singletonList(customAsyncRunnableExecutionExceptionHandler()))
 //                .setActivityBehaviorFactory(new CustomActivityBehaviourFactory())
-                // --------------------------------
-//                .setActivityBehaviorFactory(activityBehaviorFactory())
-//                .setAsyncExecutorActivate(activateDefaultExecutor)
                 .setAsyncExecutorNumberOfRetries(2)
                 .setAsyncHistoryExecutorNumberOfRetries(0)
-                .setDataSource(dataSource())
+                // -- ProcessEngineConfiguration --
+                .setDataSource(dataSource)
                 .setDatabaseSchemaUpdate(AbstractEngineConfiguration.DB_SCHEMA_UPDATE_TRUE)
-//                .setHttpClientConfig(getHttpClientConfig())
                 .setHistoryLevel(HistoryLevel.ACTIVITY)
                 .setCommandInvoker(new CdiCommandInvoker(springProcessEngineConfiguration.getAgendaOperationRunner()))
                 ;
@@ -111,10 +106,9 @@ public class EngineConfiguration implements ProcessEngineLifecycleListener {
             
             // custom mapping
             // springProcessEngineConfiguration.setCustomMybatisXMLMappers(Collections.singleton("custom-mappers/CustomSignalMapper.xml"));
-
         };
     }
-    
+
     /**
      * Override the factory behavior to set the inheritVariable property as true.
      */

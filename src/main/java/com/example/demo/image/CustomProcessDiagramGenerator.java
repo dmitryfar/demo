@@ -51,7 +51,7 @@ public class CustomProcessDiagramGenerator extends DefaultProcessDiagramGenerato
 			List<String> highLightedFlows, String activityFontName, String labelFontName, String annotationFontName,
 			ClassLoader customClassLoader, double scaleFactor, boolean drawSequenceFlowNameWithNoLabelDI) {
 
-		String processDefinitionId = bpmnModel.getDefinitionsAttributeValue("meridian", "processDefinitionId");
+		String processDefinitionId = bpmnModel.getDefinitionsAttributeValue("demo", "processDefinitionId");
 
 		DefaultProcessDiagramCanvas processDiagramCanvas = generateProcessDiagram(bpmnModel, imageType,
 				highLightedActivities, highLightedFlows, activityFontName, labelFontName, annotationFontName,
@@ -193,8 +193,8 @@ public class CustomProcessDiagramGenerator extends DefaultProcessDiagramGenerato
 			String activityFontName, String labelFontName, String annotationFontName, ClassLoader customClassLoader) {
 		DefaultProcessDiagramCanvas canvas = DefaultProcessDiagramGenerator.initProcessDiagramCanvas(bpmnModel,
 				imageType, activityFontName, labelFontName, annotationFontName, customClassLoader);
-		CustomProcessDiagramCanvas meridianProcessDiagramCanvas = CustomProcessDiagramCanvas.create(canvas,
+		CustomProcessDiagramCanvas customeProcessDiagramCanvas = CustomProcessDiagramCanvas.create(canvas,
 				imageType);
-		return meridianProcessDiagramCanvas;
+		return customeProcessDiagramCanvas;
 	}
 }

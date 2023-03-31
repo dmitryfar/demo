@@ -8,9 +8,6 @@ import org.flowable.engine.history.HistoricActivityInstance;
 
 /**
  * Represents historic activity instance with flow
- *
- * @author d.farafonov
- *
  */
 public class HistoricActivityInstanceFlow implements Serializable {
 
